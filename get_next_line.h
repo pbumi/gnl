@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 18:09:15 by pbumidan          #+#    #+#             */
-/*   Updated: 2023/11/30 21:58:23 by pbumidan         ###   ########.fr       */
+/*   Updated: 2023/12/01 21:48:19 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 
 char	*get_next_line(int fd);
 
-char	*ft_strcpy(char *dest, char *src);
-
+char	*ft_strcpy_n(char *dest, char *src, int x);
+int		ft_check_n(char *str);
 
 #endif

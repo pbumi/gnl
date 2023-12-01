@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 18:03:41 by pbumidan          #+#    #+#             */
-/*   Updated: 2023/11/30 22:51:10 by pbumidan         ###   ########.fr       */
+/*   Updated: 2023/12/01 21:48:14 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,27 @@
 
 char	*get_next_line(int fd)
 {
-	int		index;
+	int		x_read;
 	char	*buffer;
+	char	*source;
+	char	*line;
+	int		index;
 
 	buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE) + 1);
 	if (!buffer)
 		return (NULL);
-	index = read(fd, buffer, BUFFER_SIZE);
-	buffer[index] = '\0';
 
-	return (buffer);
+	x_read = read(fd, buffer, BUFFER_SIZE);
+	buffer[x_read] = '\0';
+
+	source = buffer;
+	index = ft_check_n(source);
+	line = NULL;
+	printf("1 %s", buffer);
+//	while (index > 0)
+//		return (ft_strcpy_n(line, source, index));
+//	if (index == 0)
+//		return (NULL);
+//	else
+		return (source);
 }

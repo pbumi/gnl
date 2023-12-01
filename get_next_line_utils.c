@@ -6,15 +6,14 @@
 /*   By: pbumidan <pbumidan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 21:48:26 by pbumidan          #+#    #+#             */
-/*   Updated: 2023/11/30 21:50:31 by pbumidan         ###   ########.fr       */
+/*   Updated: 2023/12/01 21:48:16 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_strcpy(char *dest, char *src)
+char	*ft_strcpy_n(char *dest, char *src, int x)
 {
-	size_t	x;
 
 	x = 0;
 	while (src [x])
@@ -25,3 +24,20 @@ char	*ft_strcpy(char *dest, char *src)
 	dest [x] = '\0';
 	return (dest);
 }
+
+int ft_check_n(char *str)
+{
+	int	x;
+
+	if (!str)
+		return (-1);
+	x = 0;
+	while (str[x] != '\0')
+	{
+		while (str[x] != '\n')
+			x++;
+		return (x);
+	} 
+	return (0);
+}
+
