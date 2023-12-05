@@ -6,71 +6,90 @@
 /*   By: pbumidan <pbumidan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 18:03:41 by pbumidan          #+#    #+#             */
-/*   Updated: 2023/12/01 21:48:14 by pbumidan         ###   ########.fr       */
+/*   Updated: 2023/12/05 19:42:28 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include <stdio.h>
+#include <string.h> 
 
-// static char	*ft_extractsource(int fd, char *source)
-// {
-// 	int		index;
-// 	char	*buffer;
-
-// 	buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE) + 1);
-// 	if (!buffer)
-// 		return (NULL);
-// 	index = 1;
-// 	while (index > 0)
-// 	{
-// 		index = read(fd, buffer, BUFFER_SIZE);
-// 		buffer[index] = '\0';
-// 	}
-// 	printf("1 %s", source);
-// 	return (source);
-// }
-
-// static char	*ft_extractline(char *source)
-// {
-// 	char	*line;
-// 	size_t	len;
-// 	int		x;
-
-// 	x = 0;
-// 	while (source[x] != '\0' && source[x] != '\n')
-// 		x++;
-// 	len = x + (source[x] == '\n');
-// 	line = (char *)malloc(sizeof(char) * (len) + 1);
-// 	if (!line)
-// 		return (NULL);
-// 	ft_strcpy(line, source);
-// 	return (line);
-// }
-
-char	*get_next_line(int fd)
+static char	*ft_extractsource(int fd, char *source)
 {
 	int		x_read;
 	char	*buffer;
-	char	*source;
-	char	*line;
-	int		index;
 
+	x_read = 0;
+	if (source == NULL && x_read == 0)
+	{
+		source = (char *)malloc(sizeof(char) * 1);
+		if (!source)
+			return (NULL);
+		source[0] = '\0';
+	}
 	buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE) + 1);
 	if (!buffer)
 		return (NULL);
+	while (ft_strchr_n(source) == 0)
+	{
+		x_read = read(fd, buffer, BUFFER_SIZE);
+		if (read < 0)
+		{
+			free (buffer);
+			free (source);
+			return (NULL);
+		}
+		buffer[x_read] = '\0';
+		source = ft_strjoin(source, buffer);
+		if (source[0] == '\0')
+		{
+			free (source);
+			free (buffer);
+			return (NULL);
+		}
+		if (x_read == 0)
+		{
+			break ;
+		}
+	}
+	free(buffer);
+	return (source);
+}
 
-	x_read = read(fd, buffer, BUFFER_SIZE);
-	buffer[x_read] = '\0';
+static char	*ft_extractline(char *temp, char **source)
+{
+	char	*line;
+	int		x;
 
-	source = buffer;
-	index = ft_check_n(source);
-	line = NULL;
-	printf("1 %s", buffer);
-//	while (index > 0)
-//		return (ft_strcpy_n(line, source, index));
-//	if (index == 0)
-//		return (NULL);
-//	else
-		return (source);
+	x = 0;
+	while (temp[x] != '\0' && temp[x] != '\n')
+		x++;
+	line = ft_substr(temp, 0, x + 1);
+	if (!line)
+	{
+		return (NULL);
+	}
+	*source = ft_substr(temp, x + 1, ft_strlen(temp));
+	if (!source)
+	{
+		return (NULL);
+	}
+	return (line);
+}
+
+char	*get_next_line(int fd)
+{
+	char		*line;
+	char		*temp;
+	static char	*source;
+
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
+	temp = ft_extractsource(fd, source);
+	if (temp == NULL)
+		return (NULL);
+	line = ft_extractline(temp, &source);
+	if (line == NULL)
+		return (NULL);
+	return (line);
 }
