@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 18:03:41 by pbumidan          #+#    #+#             */
-/*   Updated: 2023/12/05 19:42:28 by pbumidan         ###   ########.fr       */
+/*   Updated: 2023/12/05 21:32:39 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,17 @@ static char	*ft_extractsource(int fd, char *source)
 	if (source == NULL && x_read == 0)
 	{
 		source = (char *)malloc(sizeof(char) * 1);
-		if (!source)
+		if (source == NULL)
 			return (NULL);
 		source[0] = '\0';
 	}
 	buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE) + 1);
-	if (!buffer)
+	if (buffer == NULL)
 		return (NULL);
 	while (ft_strchr_n(source) == 0)
 	{
 		x_read = read(fd, buffer, BUFFER_SIZE);
-		if (read < 0)
+		if (x_read < 0)
 		{
 			free (buffer);
 			free (source);
@@ -41,12 +41,6 @@ static char	*ft_extractsource(int fd, char *source)
 		}
 		buffer[x_read] = '\0';
 		source = ft_strjoin(source, buffer);
-		if (source[0] == '\0')
-		{
-			free (source);
-			free (buffer);
-			return (NULL);
-		}
 		if (x_read == 0)
 		{
 			break ;
@@ -61,17 +55,24 @@ static char	*ft_extractline(char *temp, char **source)
 	char	*line;
 	int		x;
 
+	if (temp[0] == '\0')
+	{
+		free (temp);
+		return (NULL);
+	}
 	x = 0;
 	while (temp[x] != '\0' && temp[x] != '\n')
 		x++;
 	line = ft_substr(temp, 0, x + 1);
 	if (!line)
 	{
+	//	free (temp);
 		return (NULL);
 	}
 	*source = ft_substr(temp, x + 1, ft_strlen(temp));
 	if (!source)
 	{
+	//	free (temp);
 		return (NULL);
 	}
 	return (line);
@@ -87,7 +88,9 @@ char	*get_next_line(int fd)
 		return (NULL);
 	temp = ft_extractsource(fd, source);
 	if (temp == NULL)
+	{
 		return (NULL);
+	}
 	line = ft_extractline(temp, &source);
 	if (line == NULL)
 		return (NULL);
