@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 18:03:41 by pbumidan          #+#    #+#             */
-/*   Updated: 2023/12/05 21:32:39 by pbumidan         ###   ########.fr       */
+/*   Updated: 2023/12/07 16:50:31 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,11 @@ static char	*ft_extractsource(int fd, char *source)
 			free (source);
 			return (NULL);
 		}
-		buffer[x_read] = '\0';
-		source = ft_strjoin(source, buffer);
+		if (x_read > 0)
+		{
+			buffer[x_read] = '\0';
+			source = ft_strjoin(source, buffer);
+		}
 		if (x_read == 0)
 		{
 			break ;
@@ -66,15 +69,14 @@ static char	*ft_extractline(char *temp, char **source)
 	line = ft_substr(temp, 0, x + 1);
 	if (!line)
 	{
-	//	free (temp);
 		return (NULL);
 	}
 	*source = ft_substr(temp, x + 1, ft_strlen(temp));
 	if (!source)
 	{
-	//	free (temp);
 		return (NULL);
 	}
+	free (temp);
 	return (line);
 }
 
