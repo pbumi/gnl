@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 21:48:26 by pbumidan          #+#    #+#             */
-/*   Updated: 2023/12/06 23:20:10 by pbumidan         ###   ########.fr       */
+/*   Updated: 2023/12/08 16:08:30 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,27 +58,29 @@ char	*ft_strjoin(char *s1, char *s2)
 	size_t	y;
 	size_t	len;
 
+	if (!s1)
+	{
+		s1 = malloc(sizeof(char) + 1);
+		if (!s1)
+			return (0);
+		s1[0] = 0;
+	}
 	len = ft_strlen(s1) + ft_strlen(s2);
 	str = (char *)malloc(sizeof(char) * (len) + 1);
 	if (!str)
 	{
-		free (str);
-		str = NULL;
 		return (NULL);
 	}
-	x = 0;
-	while (s1[x])
+	x = -1;
+	while (s1[++x])
 	{
 		str[x] = s1[x];
-		x++;
 	}
 	free (s1);
-	y = 0;
-	while (s2[y])
+	y = -1;
+	while (s2[++y])
 	{
-		str[x] = s2[y];
-		x++;
-		y++;
+		str[x + y] = s2[y];
 	}
 	str[len] = '\0';
 	return (str);
