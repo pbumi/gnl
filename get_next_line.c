@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 18:03:41 by pbumidan          #+#    #+#             */
-/*   Updated: 2023/12/08 16:18:06 by pbumidan         ###   ########.fr       */
+/*   Updated: 2023/12/08 20:28:17 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,22 @@ static char	*ft_extractsource(int fd, char *source)
 	{
 		source = (char *)malloc(sizeof(char) * 1);
 		if (source == NULL)
+		{
+			//free (source);
 			return (NULL);
+		}
 		source[0] = '\0';
 	}
 	buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE) + 1);
 	if (buffer == NULL)
+	{
+		free (source);
 		return (NULL);
+	}
 	while (ft_strchr_n(source) == 0 && x_read > 0)
 	{
 		x_read = read(fd, buffer, BUFFER_SIZE);
-		if (x_read == -1)
+		if (x_read < 0)
 		{
 			free (buffer);
 			free (source);
@@ -65,7 +71,6 @@ static char	*ft_extractline(char *temp, char **source)
 	line = ft_substr(temp, 0, x + 1);
 	if (!line)
 	{
-		free (temp);
 		return (NULL);
 	}
 	*source = ft_substr(temp, x + 1, ft_strlen(temp));
@@ -83,13 +88,14 @@ char	*get_next_line(int fd)
 	char		*temp;
 	static char	*source;
 
-
+	temp = NULL;
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
+	if (!source)
+		source = NULL;
 	temp = ft_extractsource(fd, source);
 	if (temp == NULL)
 	{
-	//	free (temp);
 		return (NULL);
 	}
 	line = ft_extractline(temp, &source);
