@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 18:03:41 by pbumidan          #+#    #+#             */
-/*   Updated: 2023/12/11 18:20:58 by pbumidan         ###   ########.fr       */
+/*   Updated: 2023/12/11 18:26:34 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,10 @@ char	*get_next_line(int fd)
 	static char	*source;
 
 	temp = NULL;
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 	{
+		free (source);
+		source = NULL;
 		return (NULL);
 	}
 	if (!source)
