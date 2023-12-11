@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 21:48:26 by pbumidan          #+#    #+#             */
-/*   Updated: 2023/12/08 21:30:24 by pbumidan         ###   ########.fr       */
+/*   Updated: 2023/12/11 17:09:01 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,7 @@ char	*ft_substr(char *s, unsigned int start, size_t len)
 	size_t	i;
 
 	if (s == NULL)
-	{
-	//	free (s);
 		return (NULL);
-	}
 	slen = ft_strlen(s);
 	if (start >= slen)
 		len = 0;
@@ -48,9 +45,7 @@ char	*ft_substr(char *s, unsigned int start, size_t len)
 	i = 0;
 	while (i < len)
 	{
-		substr[i] = s[start];
-		i++;
-		start++;
+		substr[i++] = s[start++];
 	}
 	substr[i] = '\0';
 	return (substr);
@@ -78,9 +73,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	free (s1);
 	y = -1;
 	while (s2[++y])
-	{
 		str[x + y] = s2[y];
-	}
 	str[len] = '\0';
 	return (str);
 }
@@ -89,8 +82,8 @@ int	ft_strchr_n(char *s)
 {
 	size_t	x;
 
-	if (s == NULL)
-		return (-1);
+	// if (s == NULL)
+	// 	return (-1);
 	x = 0;
 	while (s[x] != '\0')
 	{
