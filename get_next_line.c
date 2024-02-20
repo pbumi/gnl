@@ -5,117 +5,109 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: pbumidan <pbumidan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/30 18:03:41 by pbumidan          #+#    #+#             */
-/*   Updated: 2023/12/11 18:26:34 by pbumidan         ###   ########.fr       */
+/*   Created: 2023/12/15 14:47:33 by pbumidan          #+#    #+#             */
+/*   Updated: 2023/12/16 17:24:03 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h>
-#include <string.h> 
 
-static char	*ft_extractsource(int fd, char *source)
+static char	*ft_free(char **str)
 {
-	int		x_read;
-	char	*buffer;
-
-	if (source == NULL)
-	{
-		source = (char *)malloc(sizeof(char) * 1);
-		if (source == NULL)
-			return (NULL);
-		source[0] = '\0';
-	}
-	buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE) + 1);
-	if (!buffer)
-	{
-		free (source);
-		source = NULL;
-		return (NULL);
-	}
-	x_read = 1;
-	while (ft_strchr_n(source) == 0 && x_read > 0)
-	{
-		x_read = read(fd, buffer, BUFFER_SIZE);
-		if (x_read < 0)
-		{
-			free (buffer);
-			free (source);
-			source = NULL;
-			return (NULL);
-		}
-		if (x_read > 0)
-		{
-			buffer[x_read] = '\0';
-			source = ft_strjoin(source, buffer);
-			if (!source)
-			{
-				free (buffer);
-				return (NULL);
-			}
-		}
-	}
-	free(buffer);
-	return (source);
+	free (*str);
+	*str = NULL;
+	return (NULL);
 }
 
-static char	*ft_extractline(char *temp, char **source)
+static char	*ft_free_all(char **source, char **str)
 {
-	char	*line;
-	int		x;
+	free (*str);
+	*source = NULL;
+	return (NULL);
+}
 
-	if (temp[0] == '\0')
-	{
-		free (temp);
-		return (NULL);
-	}
+static char	*ft_get_line(char **source)
+{
+	int		x;
+	char	*line;
+	char	*old_source;
+	char	*new_source;
+
 	x = 0;
-	while (temp[x] != '\0' && temp[x] != '\n')
+	old_source = *source;
+	while (old_source[x] && old_source[x] != '\n')
+	{
 		x++;
-	line = ft_substr(temp, 0, x + 1);
+	}
+	line = ft_substr(old_source, 0, x + 1);
 	if (!line)
 	{
-		free (temp);
-		return (NULL);
+		return (ft_free_all(source, &old_source));
 	}
-	*source = ft_substr(temp, x + 1, ft_strlen(temp));
+	new_source = ft_substr(old_source, x + 1, ft_strlen(old_source));
+	if (!new_source)
+	{
+		free (line);
+		return (ft_free_all(source, &old_source));
+	}
+	free (old_source);
+	*source = new_source;
+	return (line);
+}
+
+static int	ft_read_source(int fd, char **source)
+{
+	char	*buffer;
+	char	*temp;
+	int		bytes_read;
+
+	temp = *source;
+	buffer = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	if (!buffer)
+		return (-1);
+	bytes_read = read(fd, buffer, BUFFER_SIZE);
+	if (bytes_read < 0)
+	{
+		free (buffer);
+		return (-1);
+	}
+	buffer[bytes_read] = '\0';
+	*source = ft_strjoin(temp, buffer);
 	if (!*source)
 	{
 		free (temp);
-		free (line);
-		return (NULL);
+		free (buffer);
+		return (-1);
 	}
-	free (temp);
-	return (line);
+	free(temp);
+	free(buffer);
+	return (bytes_read);
 }
 
 char	*get_next_line(int fd)
 {
-	char		*line;
-	char		*temp;
 	static char	*source;
+	int			bytes_read;
 
-	temp = NULL;
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
-	{
-		free (source);
-		source = NULL;
-		return (NULL);
-	}
 	if (!source)
-		source = NULL;
-	temp = ft_extractsource(fd, source);
-	if (temp == NULL)
 	{
-		return (NULL);
+		source = (char *)malloc(sizeof(char));
+		if (!source)
+			return (NULL);
+		source[0] = '\0';
 	}
-	line = ft_extractline(temp, &source);
-	if (line == NULL)
-		return (NULL);
-	if (source[0] == '\0')
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, &source, 0) < 0)
 	{
-		free (source);
-		source = NULL;
+		return (ft_free(&source));
 	}
-	return (line);
+	bytes_read = ft_read_source(fd, &source);
+	while (ft_strchr(source, '\n') == 0 && bytes_read > 0)
+	{
+		bytes_read = ft_read_source(fd, &source);
+	}
+	if (bytes_read < 0 || *source == '\0')
+	{
+		return (ft_free(&source));
+	}
+	return (ft_get_line(&source));
 }

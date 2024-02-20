@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: pbumidan <pbumidan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/30 18:09:15 by pbumidan          #+#    #+#             */
-/*   Updated: 2023/12/08 18:23:23 by pbumidan         ###   ########.fr       */
+/*   Created: 2023/12/15 14:47:23 by pbumidan          #+#    #+#             */
+/*   Updated: 2023/12/15 14:48:06 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,9 @@
 # include <fcntl.h>
 
 char	*get_next_line(int fd);
-
-size_t	ft_strlen(char *str);
-char	*ft_substr(char *s, unsigned int start, size_t len);
-char	*ft_strjoin(char *s1, char *s2);
-int		ft_strchr_n(char *s);
+char	*ft_strjoin(char const *s1, char const *s2);
+size_t	ft_strlen(const char *s);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
+char	*ft_strchr(const char *s, int c);
 
 #endif
