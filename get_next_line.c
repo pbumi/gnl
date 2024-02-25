@@ -12,7 +12,7 @@
 
 #include "get_next_line.h"
 
-static char	*ft_free(char **str)
+char	*ft_free(char **str)
 {
 	free (*str);
 	*str = NULL;
@@ -55,7 +55,7 @@ static char	*ft_get_line(char **source)
 	return (line);
 }
 
-static int	ft_read_source(int fd, char **source)
+int	ft_read_source(int fd, char **source)
 {
 	char	*buffer;
 	char	*temp;

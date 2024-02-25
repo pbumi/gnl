@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 14:47:23 by pbumidan          #+#    #+#             */
-/*   Updated: 2023/12/15 14:48:06 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/02/25 17:08:35 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,13 @@
 # include <fcntl.h>
 
 char	*get_next_line(int fd);
+char	*get_all_lines(int fd);
+char	*ft_free(char **str);
+int		ft_read_source(int fd, char **source);
 char	*ft_strjoin(char const *s1, char const *s2);
 size_t	ft_strlen(const char *s);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strchr(const char *s, int c);
+
 
 #endif

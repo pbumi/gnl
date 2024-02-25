@@ -6,7 +6,7 @@
 #    By: pbumidan <pbumidan@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/16 19:21:40 by pbumidan          #+#    #+#              #
-#    Updated: 2024/02/18 18:12:34 by pbumidan         ###   ########.fr        #
+#    Updated: 2024/02/25 17:06:38 by pbumidan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ LIBH = get_next_line.h
 SRCS = \
 	get_next_line_utils.c \
 	get_next_line.c \
+	get_all_lines.c \
 
 OBJS := $(SRCS:.c=.o)
 
