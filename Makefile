@@ -6,7 +6,7 @@
 #    By: pbumidan <pbumidan@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/16 19:21:40 by pbumidan          #+#    #+#              #
-#    Updated: 2024/02/25 17:20:53 by pbumidan         ###   ########.fr        #
+#    Updated: 2024/03/25 20:01:01 by pbumidan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,20 +24,20 @@ OBJS := $(SRCS:.c=.o)
 CFLAGS = -Wall -Wextra -Werror
 
 %.o: %.c $(LIBH) 
-	cc $(CFLAGS) -c $< -o $@  -I $(LIBH)
+	@cc $(CFLAGS) -c $< -o $@  -I $(LIBH)
 	
 $(NAME): $(OBJS) $(LIBH)
-	ar -rcs $(NAME) $^ 
+	@ar -rcs $(NAME) $^ 
 	@echo "$(GREEN)gnl compiled!$(NC)"
 
 all: $(NAME)
 
 clean: 
-	rm -f $(OBJS)
+	@rm -f $(OBJS)
 	@echo "$(YELLOW)The gnl object files have been removed!$(NC)"
 
 fclean: 
-	rm -f $(NAME) $(OBJS)
+	@rm -f $(NAME) $(OBJS)
 	@echo "$(YELLOW)All the gnl files have been removed!$(NC)"
 
 re: fclean all
