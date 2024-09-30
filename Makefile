@@ -12,8 +12,6 @@
 
 NAME = gnl.a
 
-LIBH = get_next_line.h
-
 SRCS = \
 	get_next_line_utils.c \
 	get_next_line.c \
@@ -22,15 +20,12 @@ SRCS = \
 OBJS := $(SRCS:.c=.o)
 
 CFLAGS = -Wall -Wextra -Werror
-
-%.o: %.c $(LIBH) 
-	@cc $(CFLAGS) -c $< -I $(LIBH)
 	
-$(NAME): $(OBJS) $(LIBH)
+all: $(NAME)
+
+$(NAME): $(OBJS)
 	@ar -rcs $(NAME) $^ 
 	@echo "$(GREEN)gnl compiled!$(NC)"
-
-all: $(NAME)
 
 clean: 
 	@rm -f $(OBJS)
