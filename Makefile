@@ -24,7 +24,7 @@ OBJS := $(SRCS:.c=.o)
 CFLAGS = -Wall -Wextra -Werror
 
 %.o: %.c $(LIBH) 
-	@cc $(CFLAGS) -c $< -o $@  -I $(LIBH)
+	@cc $(CFLAGS) -c $<
 	
 $(NAME): $(OBJS) $(LIBH)
 	@ar -rcs $(NAME) $^ 
