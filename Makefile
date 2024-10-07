@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pbumidan <pbumidan@student.hive.fi>        +#+  +:+       +#+         #
+#    By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/16 19:21:40 by pbumidan          #+#    #+#              #
-#    Updated: 2024/03/25 20:01:01 by pbumidan         ###   ########.fr        #
+#    Updated: 2024/10/07 16:20:20 by pbumidan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,20 +20,20 @@ SRCS = \
 OBJS := $(SRCS:.c=.o)
 
 CFLAGS = -Wall -Wextra -Werror
-	
+
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	@ar -rcs $(NAME) $^ 
+	@ar -rcs $(NAME) $^
 	@echo "$(GREEN)gnl compiled!$(NC)"
 
-clean: 
+clean:
 	@rm -f $(OBJS)
-	@echo "$(YELLOW)The gnl object files have been removed!$(NC)"
+	@echo "$(YELLOW)The $(NAME) object files have been removed!$(NC)"
 
-fclean: 
+fclean:
 	@rm -f $(NAME) $(OBJS)
-	@echo "$(YELLOW)All the gnl files have been removed!$(NC)"
+	@echo "$(YELLOW)All the $(NAME)files have been removed!$(NC)"
 
 re: fclean all
 
