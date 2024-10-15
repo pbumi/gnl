@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbumidan <pbumidan@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 14:47:47 by pbumidan          #+#    #+#             */
-/*   Updated: 2023/12/15 14:48:00 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/10/15 17:48:27 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t	ft_strlen(const char *s)
+size_t	gnl_strlen(const char *s)
 {
 	size_t	i;
 
@@ -22,7 +22,7 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+char	*gnl_substr(char const *s, unsigned int start, size_t len)
 {
 	char	*substr;
 	size_t	slen;
@@ -30,7 +30,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 
 	if (s == NULL)
 		return (NULL);
-	slen = ft_strlen(s);
+	slen = gnl_strlen(s);
 	if (start >= slen)
 		len = 0;
 	if (len > (slen - start))
@@ -49,7 +49,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	return (substr);
 }
 
-char	*ft_strchr(const char *s, int c)
+char	*gnl_strchr(const char *s, int c)
 {
 	size_t	i;
 	size_t	slen;
@@ -57,7 +57,7 @@ char	*ft_strchr(const char *s, int c)
 	i = 0;
 	if (!s)
 		return (0);
-	slen = ft_strlen(s);
+	slen = gnl_strlen(s);
 	while (i < slen +1)
 	{
 		if (s[i] == (char)c)
@@ -67,7 +67,7 @@ char	*ft_strchr(const char *s, int c)
 	return (0);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*gnl_strjoin(char const *s1, char const *s2)
 {
 	char	*str;
 	size_t	a;
@@ -75,7 +75,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 
 	if (s1 == NULL || s2 == NULL)
 		return (NULL);
-	str = ((char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1)));
+	str = ((char *)malloc(sizeof(char) * (gnl_strlen(s1) + gnl_strlen(s2) + 1)));
 	if (str == NULL)
 		return (NULL);
 	a = 0;

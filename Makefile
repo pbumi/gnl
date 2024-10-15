@@ -6,27 +6,26 @@
 #    By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/16 19:21:40 by pbumidan          #+#    #+#              #
-#    Updated: 2024/10/15 17:40:41 by pbumidan         ###   ########.fr        #
+#    Updated: 2024/10/15 17:50:40 by pbumidan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = gnl.a
 
-LIBFT = ../libft/libft.a
-
 SRCS = \
 	get_next_line.c \
 	get_all_lines.c \
+	get_next_line_utils.c \
 
 OBJS := $(SRCS:.c=.o)
 
-CFLAGS = -Wall -Wextra -Werror -I../libft
+CFLAGS = -Wall -Wextra -Werror 
 
 all: $(NAME)
 
 
-$(NAME): $(OBJS) $(LIBFT)
-	@ar -rcs $(NAME) $(OBJS) $(LIBFT)
+$(NAME): $(OBJS)
+	@ar -rcs $(NAME) $(OBJS)
 	@echo "$(GREEN)gnl compiled!$(NC)"
 
 %.o: %.c

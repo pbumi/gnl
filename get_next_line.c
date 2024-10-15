@@ -6,12 +6,12 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 14:47:33 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/10/15 17:24:05 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/10/15 17:50:10 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include "../libft/libft.h"
+
 
 char	*ft_free(char **str)
 {
@@ -40,12 +40,12 @@ static char	*ft_get_line(char **source)
 	{
 		x++;
 	}
-	line = ft_substr(old_source, 0, x + 1);
+	line = gnl_substr(old_source, 0, x + 1);
 	if (!line)
 	{
 		return (ft_free_all(source, &old_source));
 	}
-	new_source = ft_substr(old_source, x + 1, ft_strlen(old_source));
+	new_source = gnl_substr(old_source, x + 1, ft_strlen(old_source));
 	if (!new_source)
 	{
 		free (line);
@@ -73,7 +73,7 @@ int	ft_read_source(int fd, char **source)
 		return (-1);
 	}
 	buffer[bytes_read] = '\0';
-	*source = ft_strjoin(temp, buffer);
+	*source = gnl_strjoin(temp, buffer);
 	if (!*source)
 	{
 		free (temp);
@@ -102,7 +102,7 @@ char	*get_next_line(int fd)
 		return (ft_free(&source));
 	}
 	bytes_read = ft_read_source(fd, &source);
-	while (ft_strchr(source, '\n') == 0 && bytes_read > 0)
+	while (gnl_strchr(source, '\n') == 0 && bytes_read > 0)
 	{
 		bytes_read = ft_read_source(fd, &source);
 	}
