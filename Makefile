@@ -6,7 +6,7 @@
 #    By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/16 19:21:40 by pbumidan          #+#    #+#              #
-#    Updated: 2024/10/15 16:44:13 by pbumidan         ###   ########.fr        #
+#    Updated: 2024/10/15 16:50:59 by pbumidan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ all: $(NAME)
 
 
 $(NAME): $(OBJS) $(LIBFT)
-	@ar -rcs $(NAME) $^
+	@ar -rcs $(NAME) $(OBJS)
 	@echo "$(GREEN)gnl compiled!$(NC)"
 
 clean:
