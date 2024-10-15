@@ -6,13 +6,13 @@
 #    By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/16 19:21:40 by pbumidan          #+#    #+#              #
-#    Updated: 2024/10/15 16:42:19 by pbumidan         ###   ########.fr        #
+#    Updated: 2024/10/15 16:44:13 by pbumidan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = gnl.a
 
-LIBFT = ./libft/libft.a
+LIBFT = ../libft/libft.a
 
 SRCS = \
 	get_next_line.c \
