@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 14:47:33 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/10/15 17:50:10 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/10/15 17:53:07 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static char	*ft_get_line(char **source)
 	{
 		return (ft_free_all(source, &old_source));
 	}
-	new_source = gnl_substr(old_source, x + 1, ft_strlen(old_source));
+	new_source = gnl_substr(old_source, x + 1, gnl_strlen(old_source));
 	if (!new_source)
 	{
 		free (line);
