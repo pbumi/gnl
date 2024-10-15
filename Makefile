@@ -6,7 +6,7 @@
 #    By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/16 19:21:40 by pbumidan          #+#    #+#              #
-#    Updated: 2024/10/15 16:57:05 by pbumidan         ###   ########.fr        #
+#    Updated: 2024/10/15 17:04:31 by pbumidan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,13 +20,13 @@ SRCS = \
 
 OBJS := $(SRCS:.c=.o)
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -I../libft/libft.h
 
 all: $(NAME)
 
 
 $(NAME): $(OBJS) $(LIBFT)
-	@ar -rcs $(NAME) $(OBJS) $(LIBFT)
+	@ar -rcs $(NAME) $(OBJS)
 	@echo "$(GREEN)gnl compiled!$(NC)"
 
 clean:
