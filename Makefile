@@ -6,14 +6,14 @@
 #    By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/16 19:21:40 by pbumidan          #+#    #+#              #
-#    Updated: 2024/10/07 16:20:20 by pbumidan         ###   ########.fr        #
+#    Updated: 2024/10/15 16:16:12 by pbumidan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = gnl.a
 
 SRCS = \
-	get_next_line_utils.c \
+	//get_next_line_utils.c \
 	get_next_line.c \
 	get_all_lines.c \
 
