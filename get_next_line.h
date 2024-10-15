@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 14:47:23 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/10/15 16:31:51 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/10/15 16:34:51 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <fcntl.h>
-# include "./libft/libft.h"
+# include "../libft/libft.h"
 
 char	*get_next_line(int fd);
 char	*get_all_lines(int fd);
