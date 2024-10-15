@@ -6,11 +6,14 @@
 #    By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/16 19:21:40 by pbumidan          #+#    #+#              #
-#    Updated: 2024/10/15 16:21:20 by pbumidan         ###   ########.fr        #
+#    Updated: 2024/10/15 16:28:53 by pbumidan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = gnl.a
+
+LIBFT = ./libft/libft.a
+GNL = ./gnl/gnl.a
 
 SRCS = \
 	get_next_line.c \
@@ -21,6 +24,9 @@ OBJS := $(SRCS:.c=.o)
 CFLAGS = -Wall -Wextra -Werror
 
 all: $(NAME)
+
+%.o: %.c
+	@cc $(CFLAGS) -c $< -o $@ $(LIBFT)
 
 $(NAME): $(OBJS)
 	@ar -rcs $(NAME) $^
