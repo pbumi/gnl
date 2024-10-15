@@ -6,7 +6,7 @@
 #    By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/16 19:21:40 by pbumidan          #+#    #+#              #
-#    Updated: 2024/10/15 17:08:38 by pbumidan         ###   ########.fr        #
+#    Updated: 2024/10/15 17:12:29 by pbumidan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ SRCS = \
 
 OBJS := $(SRCS:.c=.o)
 
-CFLAGS = -Wall -Wextra -Werror '-I../libft
+CFLAGS = -Wall -Wextra -Werror -I../libft
 
 all: $(NAME)
 
