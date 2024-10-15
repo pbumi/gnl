@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   get_all_lines.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pbumidan <pbumidan@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 17:05:50 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/02/25 17:06:03 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/10/15 17:23:56 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include "../libft/libft.h"
 
 char	*get_all_lines(int fd)
 {
