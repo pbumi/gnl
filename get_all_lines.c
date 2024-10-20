@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 17:05:50 by pbumidan          #+#    #+#             */
-/*   Updated: 2024/10/20 16:32:07 by pbumidan         ###   ########.fr       */
+/*   Updated: 2024/10/20 16:42:09 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	*get_all_lines(int fd)
 	return (source);
 }
 
-char	*get_end_lines(int fd, char	*source)
+char	*get_end_line(int fd, char	*source)
 {
 	int			bytes_read;
 
