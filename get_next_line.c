@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 14:47:33 by pbumidan          #+#    #+#             */
-/*   Updated: 2025/01/06 19:43:02 by pbumidan         ###   ########.fr       */
+/*   Updated: 2025/01/06 19:43:51 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -273,7 +273,9 @@ char *get_next_line(int fd)
     while (gnl_strchr(gnl, '\n') == 0 && read_strlen > 0)
         read_strlen = gnl_call_read(fd, &gnl);
     if (read_strlen < 0 || *gnl == '\0')
+	{
         return (on_error(&gnl, &gnl));
+	}
 	cleanup_gnl();
     return (get_line(&gnl));
 }
