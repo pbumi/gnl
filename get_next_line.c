@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 14:47:33 by pbumidan          #+#    #+#             */
-/*   Updated: 2025/01/06 18:14:36 by pbumidan         ###   ########.fr       */
+/*   Updated: 2025/01/06 18:19:28 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@
 // }
 
 
-void *ft_free(void **ptr)
+void *ft_free(char **ptr)
 {
     if (ptr && *ptr)
     {
