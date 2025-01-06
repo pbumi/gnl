@@ -100,65 +100,112 @@
 
 #include "get_next_line.h"
 
-size_t gnl_strlen(const char *s)
+char	*ft_calloc(size_t size)
 {
-    size_t i = 0;
-    while (s[i] != '\0')
-        i++;
-    return (i);
+	char	*ptr;
+	size_t	i;
+
+	ptr = malloc(size);
+	if (ptr == NULL)
+		return (NULL);
+	i = 0;
+	while (i < size)
+	{
+		ptr[i] = '\0';
+		i++;
+	}
+	return (ptr);
 }
 
-char *gnl_substr(char const *s, unsigned int start, size_t len)
+t_list	*ft_lstlast(t_list *list)
 {
-    if (len == 0 || s == NULL)
-        return (NULL);
-
-    size_t slen = gnl_strlen(s);
-    if (start >= slen)
-        len = 0;
-    if (len > (slen - start))
-        len = (slen - start);
-
-    char *substr = malloc(len + 1);
-    if (!substr)
-        return (NULL);
-
-    memcpy(substr, s + start, len);  // Use memcpy for efficiency
-    substr[len] = '\0';
-    return (substr);
+	while (list != NULL)
+	{
+		if (list->next == NULL)
+			return (list);
+		list = list->next;
+	}
+	return (list);
 }
 
-char *gnl_strchr(const char *s, int c)
+int	len_to_newline(t_list *list)
 {
-    size_t i = 0;
-    size_t slen = gnl_strlen(s);
+	int	i;
+	int	len;
 
-    if (!s)
-        return (NULL);
-
-    while (i < slen)
-    {
-        if (s[i] == (char)c)
-            return ((char *)s + i);
-        i++;
-    }
-    return (NULL);
+	if (list == NULL)
+		return (0);
+	len = 0;
+	while (list != NULL)
+	{
+		i = 0;
+		while (list->buf[i] != '\0')
+		{
+			if (list->buf[i] == '\n')
+			{
+				len++;
+				return (len);
+			}
+			i++;
+			len++;
+		}
+		list = list->next;
+	}
+	return (len);
 }
 
-char *gnl_strjoin(char const *s1, char const *s2)
+int	trim_list(t_list **list)
 {
-    if (!s1 || !s2)
-        return (NULL);
+	t_list	*last_node;
+	t_list	*clean_node;
+	int		i;
+	int		k;
+	char	*buf;
 
-    size_t len1 = gnl_strlen(s1);
-    size_t len2 = gnl_strlen(s2);
+	buf = ft_calloc(BUFFER_SIZE + 1);
+	if (buf == NULL)
+		return (0);
+	clean_node = malloc(sizeof(t_list));
+	if (clean_node == NULL)
+		return (free(buf), 0);
+	last_node = ft_lstlast(*list);
+	i = 0;
+	k = 0;
+	while (last_node->buf[i] && last_node->buf[i] != '\n')
+		++i;
+	while (last_node->buf[i] && last_node->buf[++i])
+		buf[k++] = last_node->buf[i];
+	clean_node->buf = buf;
+	clean_node->next = NULL;
+	clean_and_free(list, clean_node, buf);
+	return (1);
+}
 
-    char *str = malloc(len1 + len2 + 1);
-    if (!str)
-        return (NULL);
+char	*clean_and_free(t_list **list, t_list *clean_node, char *buf)
+{
+	t_list	*temp;
 
-    memcpy(str, s1, len1);
-    memcpy(str + len1, s2, len2);
-    str[len1 + len2] = '\0';
-    return (str);
+	if (*list == NULL)
+		return (NULL);
+	while (*list)
+	{
+		temp = (*list)->next;
+		free((*list)->buf);
+		free(*list);
+		*list = temp;
+	}
+	*list = NULL;
+	if (clean_node == 0 || buf == 0)
+	{
+		free(buf);
+		return (NULL);
+	}
+	if (clean_node->buf[0])
+		*list = clean_node;
+	else
+	{
+		free(buf);
+		free(clean_node);
+	}
+	return (NULL);
 }

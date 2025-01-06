@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 14:47:33 by pbumidan          #+#    #+#             */
-/*   Updated: 2025/01/06 18:20:45 by pbumidan         ###   ########.fr       */
+/*   Updated: 2025/01/06 18:27:26 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,98 +136,117 @@
 // 	return (ft_get_line(&source));
 // }
 
+#include "get_next_line.h"
 
-char *ft_free(char **ptr)
+static int	found_newline(t_list *list)
 {
-    if (ptr && *ptr)
-    {
-        free(*ptr);
-        *ptr = NULL;
-    }
-    return (NULL);
+	int	i;
+
+	if (list == NULL)
+		return (0);
+	while (list)
+	{
+		i = 0;
+		while (list->buf[i] && i < BUFFER_SIZE)
+		{
+			if (list->buf[i] == '\n')
+				return (1);
+			i++;
+		}
+		list = list->next;
+	}
+	return (0);
 }
 
-static char *ft_get_line(char **source)
+static void	copy_str(t_list *list, char *str)
 {
-    int x = 0;
-    char *line;
-    char *old_source = *source;
-    
-    while (old_source[x] && old_source[x] != '\n')
-        x++;
+	int	i;
+	int	k;
 
-    line = gnl_substr(old_source, 0, x + 1);
-    if (!line)
-        return (ft_free(&old_source));
-
-    char *new_source = gnl_substr(old_source, x + 1, gnl_strlen(old_source));
-    if (!new_source)
-    {
-        free(line);
-        return (ft_free(&old_source));
-    }
-
-    free(old_source);
-    *source = new_source;
-    return (line);
+	if (list == NULL)
+		return ;
+	k = 0;
+	while (list != NULL)
+	{
+		i = 0;
+		while (list->buf[i] != '\0')
+		{
+			if (list->buf[i] == '\n')
+			{
+				str[k] = '\n';
+				str[k + 1] = '\0';
+				return ;
+			}
+			str[k++] = list->buf[i++];
+		}
+		list = list->next;
+	}
+	str[k] = '\0';
 }
 
-int ft_read_source(int fd, char **source)
+static int	add_to_list(t_list **list, char *buf)
 {
-    char *buffer = malloc(BUFFER_SIZE + 1);
-    if (!buffer)
-        return (-1);
+	t_list	*new_node;
+	t_list	*last_node;
 
-    int bytes_read = read(fd, buffer, BUFFER_SIZE);
-    if (bytes_read < 0)
-    {
-        free(buffer);
-        return (-1);
-    }
-
-    buffer[bytes_read] = '\0';
-    char *temp = *source;
-    *source = gnl_strjoin(temp, buffer);
-
-    if (!*source)
-    {
-        free(temp);
-        free(buffer);
-        return (-1);
-    }
-
-    free(temp);
-    free(buffer);
-    return (bytes_read);
+	last_node = ft_lstlast(*list);
+	new_node = malloc(sizeof(t_list));
+	if (new_node == NULL)
+		return (0);
+	if (last_node == NULL)
+		*list = new_node;
+	else
+		last_node->next = new_node;
+	new_node->buf = buf;
+	new_node->next = NULL;
+	return (1);
 }
 
-char *get_next_line(int fd)
+static int	create_list(t_list **list, int fd)
 {
-    static char *source = NULL;
+	int		bytes_read;
+	char	*buf;
 
-    if (fd < 0) 
-    {
-        ft_free(&source);
-        return (NULL);
-    }
+	bytes_read = 0;
+	while (!found_newline(*list))
+	{
+		buf = ft_calloc(BUFFER_SIZE + 1);
+		if (buf == NULL)
+			return (0);
+		bytes_read = read(fd, buf, BUFFER_SIZE);
+		if (bytes_read == 0)
+		{
+			free(buf);
+			return (1);
+		}
+		if (!(add_to_list(list, buf)) || bytes_read < 0)
+		{
+			free(buf);
+			return (0);
+		}
+	}
+	return (1);
+}
 
-    if (!source)
-    {
-        source = malloc(1);
-        if (!source)
-            return (NULL);
-        source[0] = '\0';
-    }
+char	*get_next_line(int fd)
+{
+	static t_list	*list = NULL;
+	char			*line;
+	int				str_len;
 
-    if (BUFFER_SIZE <= 0)
-        return (ft_free(&source));
-
-    int bytes_read = ft_read_source(fd, &source);
-    while (gnl_strchr(source, '\n') == NULL && bytes_read > 0)
-        bytes_read = ft_read_source(fd, &source);
-
-    if (bytes_read < 0 || *source == '\0')
-        return (ft_free(&source));
-
-    return (ft_get_line(&source));
+	line = NULL;
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, &line, 0) < 0)
+		return (clean_and_free(&list, 0, line));
+	if (!(create_list(&list, fd)))
+		return (clean_and_free(&list, 0, line));
+	if (list == NULL)
+		return (NULL);
+	str_len = len_to_newline(list);
+	line = ft_calloc(str_len + 1);
+	if (line == NULL)
+		return (clean_and_free(&list, 0, line));
+	copy_str(list, line);
+	if (!(trim_list(&list)))
+		return (clean_and_free(&list, 0, line));
+	return (line);
 }
