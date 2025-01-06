@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 14:47:23 by pbumidan          #+#    #+#             */
-/*   Updated: 2025/01/06 18:27:00 by pbumidan         ###   ########.fr       */
+/*   Updated: 2025/01/06 18:33:52 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ typedef struct s_list
 	struct s_list	*next;
 }	t_list;
 
-char	*ft_calloc(size_t size);
+char	*gnl_calloc(size_t size);
 t_list	*ft_lstlast(t_list *list);
 int		len_to_newline(t_list *list);
 char	*clean_and_free(t_list **list, t_list *clean_node, char *buf);

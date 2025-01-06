@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 14:47:33 by pbumidan          #+#    #+#             */
-/*   Updated: 2025/01/06 18:27:26 by pbumidan         ###   ########.fr       */
+/*   Updated: 2025/01/06 18:33:44 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,7 +210,7 @@ static int	create_list(t_list **list, int fd)
 	bytes_read = 0;
 	while (!found_newline(*list))
 	{
-		buf = ft_calloc(BUFFER_SIZE + 1);
+		buf = gnl_calloc(BUFFER_SIZE + 1);
 		if (buf == NULL)
 			return (0);
 		bytes_read = read(fd, buf, BUFFER_SIZE);
@@ -242,7 +242,7 @@ char	*get_next_line(int fd)
 	if (list == NULL)
 		return (NULL);
 	str_len = len_to_newline(list);
-	line = ft_calloc(str_len + 1);
+	line = gnl_calloc(str_len + 1);
 	if (line == NULL)
 		return (clean_and_free(&list, 0, line));
 	copy_str(list, line);

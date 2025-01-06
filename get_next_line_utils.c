@@ -100,7 +100,7 @@
 
 #include "get_next_line.h"
 
-char	*ft_calloc(size_t size)
+char	*gnl_calloc(size_t size)
 {
 	char	*ptr;
 	size_t	i;
@@ -162,7 +162,7 @@ int	trim_list(t_list **list)
 	int		k;
 	char	*buf;
 
-	buf = ft_calloc(BUFFER_SIZE + 1);
+	buf = gnl_calloc(BUFFER_SIZE + 1);
 	if (buf == NULL)
 		return (0);
 	clean_node = malloc(sizeof(t_list));
