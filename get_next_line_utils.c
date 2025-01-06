@@ -117,7 +117,7 @@ char	*gnl_calloc(size_t size)
 	return (ptr);
 }
 
-t_list	*ft_lstlast(t_list *list)
+t_link	*ft_lstlast(t_link *list)
 {
 	while (list != NULL)
 	{
@@ -128,7 +128,7 @@ t_list	*ft_lstlast(t_list *list)
 	return (list);
 }
 
-int	len_to_newline(t_list *list)
+int	len_to_newline(t_link *list)
 {
 	int	i;
 	int	len;
@@ -154,10 +154,10 @@ int	len_to_newline(t_list *list)
 	return (len);
 }
 
-int	trim_list(t_list **list)
+int	trim_list(t_link **list)
 {
-	t_list	*last_node;
-	t_list	*clean_node;
+	t_link	*last_node;
+	t_link	*clean_node;
 	int		i;
 	int		k;
 	char	*buf;
@@ -165,7 +165,7 @@ int	trim_list(t_list **list)
 	buf = gnl_calloc(BUFFER_SIZE + 1);
 	if (buf == NULL)
 		return (0);
-	clean_node = malloc(sizeof(t_list));
+	clean_node = malloc(sizeof(t_link));
 	if (clean_node == NULL)
 		return (free(buf), 0);
 	last_node = ft_lstlast(*list);
@@ -181,9 +181,9 @@ int	trim_list(t_list **list)
 	return (1);
 }
 
-char	*clean_and_free(t_list **list, t_list *clean_node, char *buf)
+char	*clean_and_free(t_link **list, t_link *clean_node, char *buf)
 {
-	t_list	*temp;
+	t_link	*temp;
 
 	if (*list == NULL)
 		return (NULL);

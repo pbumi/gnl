@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 14:47:23 by pbumidan          #+#    #+#             */
-/*   Updated: 2025/01/06 18:33:52 by pbumidan         ###   ########.fr       */
+/*   Updated: 2025/01/06 18:35:42 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,17 +44,17 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-typedef struct s_list
+typedef struct s_link
 {
 	char			*buf;
-	struct s_list	*next;
-}	t_list;
+	struct s_link	*next;
+}	t_link;
 
 char	*gnl_calloc(size_t size);
-t_list	*ft_lstlast(t_list *list);
-int		len_to_newline(t_list *list);
-char	*clean_and_free(t_list **list, t_list *clean_node, char *buf);
-int		trim_list(t_list **list);
+t_link	*ft_lstlast(t_link *list);
+int		len_to_newline(t_link *list);
+char	*clean_and_free(t_link **list, t_link *clean_node, char *buf);
+int		trim_list(t_link **list);
 char	*get_next_line(int fd);
 
 #endif

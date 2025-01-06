@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 14:47:33 by pbumidan          #+#    #+#             */
-/*   Updated: 2025/01/06 18:33:44 by pbumidan         ###   ########.fr       */
+/*   Updated: 2025/01/06 18:36:19 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@
 
 #include "get_next_line.h"
 
-static int	found_newline(t_list *list)
+static int	found_newline(t_link *list)
 {
 	int	i;
 
@@ -158,7 +158,7 @@ static int	found_newline(t_list *list)
 	return (0);
 }
 
-static void	copy_str(t_list *list, char *str)
+static void	copy_str(t_link *list, char *str)
 {
 	int	i;
 	int	k;
@@ -184,13 +184,13 @@ static void	copy_str(t_list *list, char *str)
 	str[k] = '\0';
 }
 
-static int	add_to_list(t_list **list, char *buf)
+static int	add_to_list(t_link **list, char *buf)
 {
-	t_list	*new_node;
-	t_list	*last_node;
+	t_link	*new_node;
+	t_link	*last_node;
 
 	last_node = ft_lstlast(*list);
-	new_node = malloc(sizeof(t_list));
+	new_node = malloc(sizeof(t_link));
 	if (new_node == NULL)
 		return (0);
 	if (last_node == NULL)
@@ -202,7 +202,7 @@ static int	add_to_list(t_list **list, char *buf)
 	return (1);
 }
 
-static int	create_list(t_list **list, int fd)
+static int	create_list(t_link **list, int fd)
 {
 	int		bytes_read;
 	char	*buf;
@@ -230,7 +230,7 @@ static int	create_list(t_list **list, int fd)
 
 char	*get_next_line(int fd)
 {
-	static t_list	*list = NULL;
+	static t_link	*list = NULL;
 	char			*line;
 	int				str_len;
 
