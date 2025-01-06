@@ -97,115 +97,98 @@
 // 	str[a] = '\0';
 // 	return (str);
 // }
-
 #include "get_next_line.h"
 
-char	*gnl_calloc(size_t size)
+static void	*gnl_memmove(void *dst, const void *src, size_t len)
 {
-	char	*ptr;
+	size_t	i;
+	size_t	n;
+
+	n = len;
+	i = 0;
+	if (dst == 0 && src == 0)
+		return (0);
+	if (dst > src)
+	{
+		while (i < len)
+		{
+			((unsigned char *)dst)[n -1] = ((unsigned char *)src)[n -1];
+			n--;
+			i++;
+		}
+	}
+	else
+	{
+		while (i < len)
+		{
+			((unsigned char *)dst)[i] = ((unsigned char *)src)[i];
+			i++;
+		}
+	}
+	return (dst);
+}
+
+size_t	gnl_strlen(const char *s)
+{
 	size_t	i;
 
-	ptr = malloc(size);
-	if (ptr == NULL)
-		return (NULL);
 	i = 0;
-	while (i < size)
-	{
-		ptr[i] = '\0';
+	while (s[i] != 0)
 		i++;
-	}
+	return (i);
+}
+
+char	*gnl_strjoin(char const *s1, char const *s2)
+{
+	size_t	flen;
+	char	*ptr;
+
+	if (s1 == NULL || s2 == NULL)
+		return (NULL);
+	flen = gnl_strlen(s1) + gnl_strlen(s2);
+	ptr = malloc(flen +1);
+	if (!ptr)
+		return (0);
+	gnl_memmove(ptr, s1, gnl_strlen(s1));
+	gnl_memmove(ptr + gnl_strlen(s1), s2, gnl_strlen(s2));
+	ptr[flen] = 0;
 	return (ptr);
 }
 
-t_link	*gnl_lstlast(t_link *list)
+char	*gnl_substr(char const *s, unsigned int start, size_t len)
 {
-	while (list != NULL)
-	{
-		if (list->next == NULL)
-			return (list);
-		list = list->next;
-	}
-	return (list);
+	char	*ptr;
+	size_t	slen;
+
+	if (!s)
+		return (NULL);
+	slen = gnl_strlen(s);
+	if ((size_t)start >= slen)
+		len = 0;
+	if (slen - (size_t)start < len)
+		len = slen - (size_t)start;
+	ptr = malloc((len +1) * sizeof(char));
+	if (ptr == NULL)
+		return (NULL);
+	gnl_memmove(ptr, &s[start], len);
+	ptr[len] = 0;
+	return (ptr);
 }
 
-int	len_to_newline(t_link *list)
+char	*gnl_strchr(const char *s, int c)
 {
-	int	i;
-	int	len;
+	size_t	i;
+	size_t	slen;
 
-	if (list == NULL)
-		return (0);
-	len = 0;
-	while (list != NULL)
-	{
-		i = 0;
-		while (list->buf[i] != '\0')
-		{
-			if (list->buf[i] == '\n')
-			{
-				len++;
-				return (len);
-			}
-			i++;
-			len++;
-		}
-		list = list->next;
-	}
-	return (len);
-}
-
-int	trim_list(t_link **list)
-{
-	t_link	*last_node;
-	t_link	*clean_node;
-	int		i;
-	int		k;
-	char	*buf;
-
-	buf = gnl_calloc(BUFFER_SIZE + 1);
-	if (buf == NULL)
-		return (0);
-	clean_node = malloc(sizeof(t_link));
-	if (clean_node == NULL)
-		return (free(buf), 0);
-	last_node = gnl_lstlast(*list);
 	i = 0;
-	k = 0;
-	while (last_node->buf[i] && last_node->buf[i] != '\n')
-		++i;
-	while (last_node->buf[i] && last_node->buf[++i])
-		buf[k++] = last_node->buf[i];
-	clean_node->buf = buf;
-	clean_node->next = NULL;
-	clean_and_free(list, clean_node, buf);
-	return (1);
-}
-
-char	*clean_and_free(t_link **list, t_link *clean_node, char *buf)
-{
-	t_link	*temp;
-
-	if (*list == NULL)
-		return (NULL);
-	while (*list)
+	if (!s)
+		return (0);
+	slen = gnl_strlen(s);
+	while (i < slen +1)
 	{
-		temp = (*list)->next;
-		free((*list)->buf);
-		free(*list);
-		*list = temp;
+		if (s[i] == (char)c)
+			return (&((char *)s)[i]);
+		i++;
 	}
-	*list = NULL;
-	if (clean_node == 0 || buf == 0)
-	{
-		free(buf);
-		return (NULL);
-	}
-	if (clean_node->buf[0])
-		*list = clean_node;
-	else
-	{
-		free(buf);
-		free(clean_node);
-	}
-	return (NULL);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 14:47:33 by pbumidan          #+#    #+#             */
-/*   Updated: 2025/01/06 18:38:21 by pbumidan         ###   ########.fr       */
+/*   Updated: 2025/01/06 18:49:44 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,118 +135,89 @@
 // 	}
 // 	return (ft_get_line(&source));
 // }
-
 #include "get_next_line.h"
 
-static int	found_newline(t_link *list)
+static char	*on_error(char **gnl, char **tmp)
 {
-	int	i;
+	free (*tmp);
+	*gnl = 0;
+	return (NULL);
+}
 
-	if (list == NULL)
-		return (0);
-	while (list)
+static char	*get_line(char **gnl)
+{
+	int		i;
+	char	*the_line;
+	char	*tmp;
+	char	*new;
+
+	i = 0;
+	tmp = *gnl;
+	while (tmp[i] && tmp[i] != '\n')
+		i++;
+	if (tmp[i] == '\n')
+		i++;
+	the_line = gnl_substr(tmp, 0, i);
+	if (!the_line)
+		return (on_error(gnl, &tmp));
+	new = gnl_substr(tmp, i, gnl_strlen(tmp) - i);
+	if (!new)
 	{
-		i = 0;
-		while (list->buf[i] && i < BUFFER_SIZE)
-		{
-			if (list->buf[i] == '\n')
-				return (1);
-			i++;
-		}
-		list = list->next;
+		free (the_line);
+		return (on_error(gnl, &tmp));
 	}
-	return (0);
+	free (tmp);
+	*gnl = new;
+	return (the_line);
 }
 
-static void	copy_str(t_link *list, char *str)
+static int	gnl_call_read(int fd, char **gnl)
 {
-	int	i;
-	int	k;
-
-	if (list == NULL)
-		return ;
-	k = 0;
-	while (list != NULL)
-	{
-		i = 0;
-		while (list->buf[i] != '\0')
-		{
-			if (list->buf[i] == '\n')
-			{
-				str[k] = '\n';
-				str[k + 1] = '\0';
-				return ;
-			}
-			str[k++] = list->buf[i++];
-		}
-		list = list->next;
-	}
-	str[k] = '\0';
-}
-
-static int	add_to_list(t_link **list, char *buf)
-{
-	t_link	*new_node;
-	t_link	*last_node;
-
-	last_node = gnl_lstlast(*list);
-	new_node = malloc(sizeof(t_link));
-	if (new_node == NULL)
-		return (0);
-	if (last_node == NULL)
-		*list = new_node;
-	else
-		last_node->next = new_node;
-	new_node->buf = buf;
-	new_node->next = NULL;
-	return (1);
-}
-
-static int	create_list(t_link **list, int fd)
-{
-	int		bytes_read;
 	char	*buf;
+	char	*temp;
+	int		read_strlen;
 
-	bytes_read = 0;
-	while (!found_newline(*list))
+	temp = *gnl;
+	buf = malloc(BUFFER_SIZE + 1);
+	if (!buf)
+		return (-1);
+	read_strlen = read(fd, buf, BUFFER_SIZE);
+	if (read_strlen < 0)
 	{
-		buf = gnl_calloc(BUFFER_SIZE + 1);
-		if (buf == NULL)
-			return (0);
-		bytes_read = read(fd, buf, BUFFER_SIZE);
-		if (bytes_read == 0)
-		{
-			free(buf);
-			return (1);
-		}
-		if (!(add_to_list(list, buf)) || bytes_read < 0)
-		{
-			free(buf);
-			return (0);
-		}
+		free (buf);
+		return (-1);
 	}
-	return (1);
+	buf[read_strlen] = '\0';
+	*gnl = gnl_strjoin(temp, buf);
+	if (!*gnl)
+	{
+		free (temp);
+		free (buf);
+		return (-1);
+	}
+	free(temp);
+	free(buf);
+	return (read_strlen);
 }
 
 char	*get_next_line(int fd)
 {
-	static t_link	*list = NULL;
-	char			*line;
-	int				str_len;
+	static char	*gnl;
+	int			read_strlen;
 
-	line = NULL;
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, &line, 0) < 0)
-		return (clean_and_free(&list, 0, line));
-	if (!(create_list(&list, fd)))
-		return (clean_and_free(&list, 0, line));
-	if (list == NULL)
-		return (NULL);
-	str_len = len_to_newline(list);
-	line = gnl_calloc(str_len + 1);
-	if (line == NULL)
-		return (clean_and_free(&list, 0, line));
-	copy_str(list, line);
-	if (!(trim_list(&list)))
-		return (clean_and_free(&list, 0, line));
-	return (line);
+	if (!gnl)
+	{
+		gnl = malloc(1);
+		if (!gnl)
+			return (NULL);
+		gnl[0] = '\0';
+	}
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, &gnl, 0) < 0)
+		return (on_error(&gnl, &gnl));
+	read_strlen = gnl_call_read(fd, &gnl);
+	while (gnl_strchr(gnl, '\n') == 0 && read_strlen > 0)
+		read_strlen = gnl_call_read(fd, &gnl);
+	if (read_strlen < 0 || *gnl == '\0')
+		return (on_error(&gnl, &gnl));
+	return (get_line(&gnl));
 }
