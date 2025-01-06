@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 14:47:23 by pbumidan          #+#    #+#             */
-/*   Updated: 2025/01/06 18:15:05 by pbumidan         ###   ########.fr       */
+/*   Updated: 2025/01/06 18:16:33 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 char	*get_next_line(int fd);
 char	*get_end_line(int fd, char *source);
 char	*get_all_lines(int fd);
+char	*ft_free(void **str);
 int		ft_read_source(int fd, char **source);
 char	*gnl_strjoin(char const *s1, char const *s2);
 size_t	gnl_strlen(const char *s);
