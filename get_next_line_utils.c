@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 14:47:47 by pbumidan          #+#    #+#             */
-/*   Updated: 2025/01/06 17:52:25 by pbumidan         ###   ########.fr       */
+/*   Updated: 2025/01/06 17:55:49 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	*gnl_substr(char const *s, unsigned int start, size_t len)
 		len = 0;
 	if (len > (slen - start))
 		len = (slen - start);
-	substr = ft_calloc(len + 1, sizeof(char *)); //malloc((sizeof(char)) * (len + 1));
+	substr = calloc(len + 1, sizeof(char *)); //malloc((sizeof(char)) * (len + 1));
 	if (!substr)
 		return (NULL);
 	i = 0;
