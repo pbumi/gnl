@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 14:47:33 by pbumidan          #+#    #+#             */
-/*   Updated: 2025/01/06 19:29:58 by pbumidan         ###   ########.fr       */
+/*   Updated: 2025/01/06 19:32:05 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,7 @@
 // 	return (ft_get_line(&source));
 // }
 #include "get_next_line.h"
+#include <stdio.h>
 
 // static char	*on_error(char **gnl, char **tmp)
 // {
