@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 14:47:23 by pbumidan          #+#    #+#             */
-/*   Updated: 2025/01/06 18:48:35 by pbumidan         ###   ########.fr       */
+/*   Updated: 2025/01/06 19:10:44 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ char	*gnl_strjoin(char const *s1, char const *s2);
 size_t	gnl_strlen(const char *s);
 char	*gnl_substr(char const *s, unsigned int start, size_t len);
 char	*gnl_strchr(const char *s, int c);
+void    cleanup_gnl(void);
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 2
