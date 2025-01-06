@@ -117,7 +117,7 @@ char	*gnl_calloc(size_t size)
 	return (ptr);
 }
 
-t_link	*ft_lstlast(t_link *list)
+t_link	*gnl_lstlast(t_link *list)
 {
 	while (list != NULL)
 	{
@@ -168,7 +168,7 @@ int	trim_list(t_link **list)
 	clean_node = malloc(sizeof(t_link));
 	if (clean_node == NULL)
 		return (free(buf), 0);
-	last_node = ft_lstlast(*list);
+	last_node = gnl_lstlast(*list);
 	i = 0;
 	k = 0;
 	while (last_node->buf[i] && last_node->buf[i] != '\n')

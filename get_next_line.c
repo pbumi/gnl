@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 14:47:33 by pbumidan          #+#    #+#             */
-/*   Updated: 2025/01/06 18:36:19 by pbumidan         ###   ########.fr       */
+/*   Updated: 2025/01/06 18:38:21 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,7 +189,7 @@ static int	add_to_list(t_link **list, char *buf)
 	t_link	*new_node;
 	t_link	*last_node;
 
-	last_node = ft_lstlast(*list);
+	last_node = gnl_lstlast(*list);
 	new_node = malloc(sizeof(t_link));
 	if (new_node == NULL)
 		return (0);
