@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 14:47:33 by pbumidan          #+#    #+#             */
-/*   Updated: 2025/01/06 19:58:46 by pbumidan         ###   ########.fr       */
+/*   Updated: 2025/01/06 20:07:27 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -282,7 +282,6 @@ char *get_next_line(int fd)
     {
         return (NULL); // Handle the case where line allocation fails
     }
-    cleanup_gnl(); // Clean up any static resources used by gnl
     return (line);
     //return (get_line(&gnl));
 }

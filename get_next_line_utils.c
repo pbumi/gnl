@@ -97,6 +97,7 @@
 // 	str[a] = '\0';
 // 	return (str);
 // }
+
 #include "get_next_line.h"
 
 static void	*gnl_memmove(void *dst, const void *src, size_t len)
