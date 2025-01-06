@@ -146,12 +146,12 @@ char	*gnl_strjoin(char const *s1, char const *s2)
 	if (s1 == NULL || s2 == NULL)
 		return (NULL);
 	flen = gnl_strlen(s1) + gnl_strlen(s2);
-	ptr = calloc(flen + 1, sizeof(char *));
+	ptr = calloc(flen + 1, sizeof(char));
 	if (!ptr)
 		return (0);
 	gnl_memmove(ptr, s1, gnl_strlen(s1));
 	gnl_memmove(ptr + gnl_strlen(s1), s2, gnl_strlen(s2));
-	ptr[flen] = 0;
+	ptr[flen] = '\0';
 	return (ptr);
 }
 
@@ -171,7 +171,7 @@ char	*gnl_substr(char const *s, unsigned int start, size_t len)
 	if (ptr == NULL)
 		return (NULL);
 	gnl_memmove(ptr, &s[start], len);
-	ptr[len] = 0;
+	ptr[len] = '\0';
 	return (ptr);
 }
 
