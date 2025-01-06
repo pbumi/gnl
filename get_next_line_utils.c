@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 14:47:47 by pbumidan          #+#    #+#             */
-/*   Updated: 2025/01/06 18:03:14 by pbumidan         ###   ########.fr       */
+/*   Updated: 2025/01/06 18:08:14 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*gnl_substr(char const *s, unsigned int start, size_t len)
 	size_t	slen;
 	size_t	i;
 
-	if (s == NULL)
+	if (len == 0 || s == NULL)
 		return (NULL);
 	slen = gnl_strlen(s);
 	if (start >= slen)
@@ -58,10 +58,13 @@ char	*gnl_strchr(const char *s, int c)
 	if (!s)
 		return (0);
 	slen = gnl_strlen(s);
-	while (i < slen +1)
+	while (i < slen)
 	{
 		if (s[i] == (char)c)
-			return (&((char *)s)[i]);
+		{
+			return ((char *)s + i);
+		}
+			//return (&((char *)s)[i]);
 		i++;
 	}
 	return (0);
