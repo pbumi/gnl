@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 14:47:33 by pbumidan          #+#    #+#             */
-/*   Updated: 2025/01/06 19:39:47 by pbumidan         ###   ########.fr       */
+/*   Updated: 2025/01/06 19:43:02 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,9 +150,16 @@ void cleanup_gnl(void)
 {
     static char *gnl = NULL;
 
-	dprintf(2, "Freeing gnl at address: %p\n", (void *)gnl); 
-    free(gnl);
-    gnl = NULL; // Reset static memory
+    if (gnl)
+	{
+        dprintf(STDERR_FILENO, "Freeing gnl at address: %p\n", (void *)gnl); // Log memory freeing
+        free(gnl);           // Free the memory if it's allocated
+        gnl = NULL;          // Set the static pointer to NULL to avoid a dangling pointer
+    }
+	else 
+	{
+        dprintf(STDERR_FILENO, "gnl is already NULL, nothing to free\n");
+    }
 }
 
 static char *on_error(char **gnl, char **tmp)
@@ -267,5 +274,6 @@ char *get_next_line(int fd)
         read_strlen = gnl_call_read(fd, &gnl);
     if (read_strlen < 0 || *gnl == '\0')
         return (on_error(&gnl, &gnl));
+	cleanup_gnl();
     return (get_line(&gnl));
 }
