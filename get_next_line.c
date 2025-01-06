@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 14:47:33 by pbumidan          #+#    #+#             */
-/*   Updated: 2025/01/06 18:55:08 by pbumidan         ###   ########.fr       */
+/*   Updated: 2025/01/06 19:00:13 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,12 +137,26 @@
 // }
 #include "get_next_line.h"
 
-static char	*on_error(char **gnl, char **tmp)
+// static char	*on_error(char **gnl, char **tmp)
+// {
+// 	free (*tmp);
+// 	tmp = 0; //
+// 	*gnl = 0;
+// 	return (NULL);
+// }
+
+static char *on_error(char **gnl, char **tmp)
 {
-	free (*tmp);
-	tmp = 0; //
-	*gnl = 0;
-	return (NULL);
+    if (*tmp)
+	{
+        free(*tmp);
+        *tmp = NULL; // Set tmp to NULL to avoid dangling pointer
+    }
+    if (*gnl)
+	{
+        *gnl = NULL; // Set gnl to NULL as well
+    }
+    return (NULL);
 }
 
 static char	*get_line(char **gnl)
@@ -201,24 +215,46 @@ static int	gnl_call_read(int fd, char **gnl)
 	return (read_strlen);
 }
 
-char	*get_next_line(int fd)
-{
-	static char	*gnl;
-	int			read_strlen;
+// char	*get_next_line(int fd)
+// {
+// 	static char	*gnl;
+// 	int			read_strlen;
 
-	if (!gnl)
-	{
-		gnl = malloc(1);
-		if (!gnl)
-			return (NULL);
-		gnl[0] = '\0';
-	}
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, &gnl, 0) < 0)
-		return (on_error(&gnl, &gnl));
-	read_strlen = gnl_call_read(fd, &gnl);
-	while (gnl_strchr(gnl, '\n') == 0 && read_strlen > 0)
-		read_strlen = gnl_call_read(fd, &gnl);
-	if (read_strlen < 0 || *gnl == '\0')
-		return (on_error(&gnl, &gnl));
-	return (get_line(&gnl));
+// 	if (!gnl)
+// 	{
+// 		gnl = malloc(1);
+// 		if (!gnl)
+// 			return (NULL);
+// 		gnl[0] = '\0';
+// 	}
+// 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, &gnl, 0) < 0)
+// 		return (on_error(&gnl, &gnl));
+// 	read_strlen = gnl_call_read(fd, &gnl);
+// 	while (gnl_strchr(gnl, '\n') == 0 && read_strlen > 0)
+// 		read_strlen = gnl_call_read(fd, &gnl);
+// 	if (read_strlen < 0 || *gnl == '\0')
+// 		return (on_error(&gnl, &gnl));
+// 	return (get_line(&gnl));
+// }
+
+char *get_next_line(int fd)
+{
+    static char *gnl = NULL;
+    int read_strlen;
+
+    if (!gnl)
+    {
+        gnl = malloc(1);
+        if (!gnl)
+            return (NULL);
+        gnl[0] = '\0';
+    }
+    if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, &gnl, 0) < 0)
+        return (on_error(&gnl, &gnl));
+    read_strlen = gnl_call_read(fd, &gnl);
+    while (gnl_strchr(gnl, '\n') == 0 && read_strlen > 0)
+        read_strlen = gnl_call_read(fd, &gnl);
+    if (read_strlen < 0 || *gnl == '\0')
+        return (on_error(&gnl, &gnl));
+    return (get_line(&gnl));
 }
