@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 14:47:23 by pbumidan          #+#    #+#             */
-/*   Updated: 2025/01/06 18:19:36 by pbumidan         ###   ########.fr       */
+/*   Updated: 2025/01/06 18:22:28 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <fcntl.h>
+# include <string.h>
 
 char	*get_next_line(int fd);
 char	*get_end_line(int fd, char *source);
