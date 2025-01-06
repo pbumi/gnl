@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 14:47:33 by pbumidan          #+#    #+#             */
-/*   Updated: 2025/01/06 18:49:44 by pbumidan         ###   ########.fr       */
+/*   Updated: 2025/01/06 18:55:08 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,7 @@
 static char	*on_error(char **gnl, char **tmp)
 {
 	free (*tmp);
+	tmp = 0; //
 	*gnl = 0;
 	return (NULL);
 }
