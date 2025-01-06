@@ -146,7 +146,7 @@ char	*gnl_strjoin(char const *s1, char const *s2)
 	if (s1 == NULL || s2 == NULL)
 		return (NULL);
 	flen = gnl_strlen(s1) + gnl_strlen(s2);
-	ptr = malloc(flen +1);
+	ptr = calloc(flen + 1, sizeof(char *));
 	if (!ptr)
 		return (0);
 	gnl_memmove(ptr, s1, gnl_strlen(s1));
@@ -167,7 +167,7 @@ char	*gnl_substr(char const *s, unsigned int start, size_t len)
 		len = 0;
 	if (slen - (size_t)start < len)
 		len = slen - (size_t)start;
-	ptr = malloc((len +1) * sizeof(char));
+	ptr = calloc((len + 1), sizeof(char));
 	if (ptr == NULL)
 		return (NULL);
 	gnl_memmove(ptr, &s[start], len);
