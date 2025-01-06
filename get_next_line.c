@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 14:47:33 by pbumidan          #+#    #+#             */
-/*   Updated: 2025/01/06 19:36:31 by pbumidan         ###   ########.fr       */
+/*   Updated: 2025/01/06 19:39:47 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,12 +150,9 @@ void cleanup_gnl(void)
 {
     static char *gnl = NULL;
 
-    if (gnl)
-    {
-		dprintf(2, "Freeing gnl at address: %p\n", (void *)gnl); 
-        free(gnl);
-        gnl = NULL; // Reset static memory
-    }
+	dprintf(2, "Freeing gnl at address: %p\n", (void *)gnl); 
+    free(gnl);
+    gnl = NULL; // Reset static memory
 }
 
 static char *on_error(char **gnl, char **tmp)
