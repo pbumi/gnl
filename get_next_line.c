@@ -6,48 +6,23 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 14:47:33 by pbumidan          #+#    #+#             */
-/*   Updated: 2025/01/10 16:00:58 by pbumidan         ###   ########.fr       */
+/*   Updated: 2025/01/10 16:04:07 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-
-// static char	*on_error(char **gnl, char **tmp)
-// {
-// 	free (*tmp);
-// 	tmp = 0; //
-// 	*gnl = 0;
-// 	return (NULL);
-// }
-
-// void cleanup_gnl(void)
-// {
-//     static char *gnl = NULL;
-
-//     if (gnl)
-// 	{
-//         dprintf(STDERR_FILENO, "Freeing gnl at address: %p\n", (void *)gnl); // Log memory freeing
-//         free(gnl);           // Free the memory if it's allocated
-//         gnl = NULL;          // Set the static pointer to NULL to avoid a dangling pointer
-//     }
-// 	else 
-// 	{
-//         dprintf(STDERR_FILENO, "gnl is already NULL, nothing to free\n");
-//     }
-// }
 
 static char *on_error(char **gnl, char **tmp)
 {
     if (*tmp)
 	{
         free(*tmp);
-        *tmp = NULL; // Set tmp to NULL to avoid dangling pointer
+        *tmp = NULL;
     }
     if (*gnl)
 	{
 		free(*gnl); 
-        *gnl = NULL; // Set gnl to NULL as well
+        *gnl = NULL;
     }
     return (NULL);
 }
@@ -108,54 +83,53 @@ static int	gnl_call_read(int fd, char **gnl)
 	return (read_strlen);
 }
 
-// char	*get_next_line(int fd)
-// {
-// 	static char	*gnl;
-// 	int			read_strlen;
-
-// 	if (!gnl)
-// 	{
-// 		gnl = malloc(1);
-// 		if (!gnl)
-// 			return (NULL);
-// 		gnl[0] = '\0';
-// 	}
-// 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, &gnl, 0) < 0)
-// 		return (on_error(&gnl, &gnl));
-// 	read_strlen = gnl_call_read(fd, &gnl);
-// 	while (gnl_strchr(gnl, '\n') == 0 && read_strlen > 0)
-// 		read_strlen = gnl_call_read(fd, &gnl);
-// 	if (read_strlen < 0 || *gnl == '\0')
-// 		return (on_error(&gnl, &gnl));
-// 	return (get_line(&gnl));
-// }
-
-char *get_next_line(int fd)
+char	*get_next_line(int fd)
 {
-    static char *gnl = NULL;
-    int read_strlen;
+	static char	*gnl;
+	int			read_strlen;
 
-    if (!gnl)
-    {
-        gnl = malloc(1);
-        if (!gnl)
-            return (NULL);
-        gnl[0] = '\0';
-    }
-    if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, &gnl, 0) < 0)
-        return (on_error(&gnl, &gnl));
-    read_strlen = gnl_call_read(fd, &gnl);
-    while (gnl_strchr(gnl, '\n') == 0 && read_strlen > 0)
-        read_strlen = gnl_call_read(fd, &gnl);
-    if (read_strlen < 0 || *gnl == '\0')
+	if (!gnl)
 	{
-        return (on_error(&gnl, &gnl));
+		gnl = malloc(1);
+		if (!gnl)
+			return (NULL);
+		gnl[0] = '\0';
 	}
-	
-	char *line = get_line(&gnl); // Get the line
-    if (!line)
-    {
-        return (NULL); // Handle the case where line allocation fails
-    }
-    return (line);
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, &gnl, 0) < 0)
+		return (on_error(&gnl, &gnl));
+	read_strlen = gnl_call_read(fd, &gnl);
+	while (gnl_strchr(gnl, '\n') == 0 && read_strlen > 0)
+		read_strlen = gnl_call_read(fd, &gnl);
+	if (read_strlen < 0 || *gnl == '\0')
+		return (on_error(&gnl, &gnl));
+	return (get_line(&gnl));
 }
+
+// char *get_next_line(int fd)
+// {
+//     static char *gnl = NULL;
+//     int read_strlen;
+
+//     if (!gnl)
+//     {
+//         gnl = malloc(1);
+//         if (!gnl)
+//             return (NULL);
+//         gnl[0] = '\0';
+//     }
+//     if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, &gnl, 0) < 0)
+//         return (on_error(&gnl, &gnl));
+//     read_strlen = gnl_call_read(fd, &gnl);
+//     while (gnl_strchr(gnl, '\n') == 0 && read_strlen > 0)
+//         read_strlen = gnl_call_read(fd, &gnl);
+//     if (read_strlen < 0 || *gnl == '\0')
+// 	{
+//         return (on_error(&gnl, &gnl));
+// 	}
+// 	char *line = get_line(&gnl);
+//     if (!line)
+// 	{
+//         return (NULL);
+// 	}
+//     return (line);
+// }
