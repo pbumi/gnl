@@ -6,7 +6,7 @@
 #    By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/16 19:21:40 by pbumidan          #+#    #+#              #
-#    Updated: 2024/10/15 17:50:40 by pbumidan         ###   ########.fr        #
+#    Updated: 2025/02/26 13:26:25 by pbumidan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,6 @@ NAME = gnl.a
 
 SRCS = \
 	get_next_line.c \
-	get_all_lines.c \
 	get_next_line_utils.c \
 
 OBJS := $(SRCS:.c=.o)
