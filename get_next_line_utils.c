@@ -1,14 +1,14 @@
-// /* ************************************************************************** */
-// /*                                                                            */
-// /*                                                        :::      ::::::::   */
-// /*   get_next_line_utils.c                              :+:      :+:    :+:   */
-// /*                                                    +:+ +:+         +:+     */
-// /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
-// /*                                                +#+#+#+#+#+   +#+           */
-// /*   Created: 2023/12/15 14:47:47 by pbumidan          #+#    #+#             */
-// /*   Updated: 2025/01/06 18:08:14 by pbumidan         ###   ########.fr       */
-// /*                                                                            */
-// /* ************************************************************************** */
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/15 14:47:47 by pbumidan          #+#    #+#             */
+/*   Updated: 2025/02/26 13:18:39 by pbumidan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "get_next_line.h"
 
@@ -68,46 +68,25 @@ char	*gnl_strjoin(char const *s1, char const *s2)
 	return (ptr);
 }
 
-char *gnl_substr(char *s, unsigned int start, size_t len)
+char	*gnl_substr(char *s, unsigned int start, size_t len)
 {
-    char *substr;
-    size_t i = 0;
+	char	*substr;
+	size_t	i;
 
-    if (!s)
-        return (NULL);
-
-    substr = (char *)calloc(len + 1, sizeof(char)); // Allocate memory for the substring
-    if (!substr)
-        return (NULL);
-
-    while (i < len)
-    {
-        substr[i] = s[start + i];
-        i++;
-    }
-    substr[i] = '\0';  // Null terminate the substring
-    return (substr);
+	i = 0;
+	if (!s)
+		return (NULL);
+	substr = (char *)calloc(len + 1, sizeof(char));
+	if (!substr)
+		return (NULL);
+	while (i < len)
+	{
+		substr[i] = s[start + i];
+		i++;
+	}
+	substr[i] = '\0';
+	return (substr);
 }
-
-// char	*gnl_substr(char const *s, unsigned int start, size_t len)
-// {
-// 	char	*ptr;
-// 	size_t	slen;
-
-// 	if (!s)
-// 		return (NULL);
-// 	slen = gnl_strlen(s);
-// 	if ((size_t)start >= slen)
-// 		len = 0;
-// 	if (slen - (size_t)start < len)
-// 		len = slen - (size_t)start;
-// 	ptr = calloc((len + 1), sizeof(char));
-// 	if (ptr == NULL)
-// 		return (NULL);
-// 	gnl_memmove(ptr, &s[start], len);
-// 	ptr[len] = '\0';
-// 	return (ptr);
-// }
 
 char	*gnl_strchr(const char *s, int c)
 {

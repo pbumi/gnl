@@ -6,7 +6,7 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 16:06:16 by pbumidan          #+#    #+#             */
-/*   Updated: 2025/01/10 16:06:30 by pbumidan         ###   ########.fr       */
+/*   Updated: 2025/02/26 13:16:20 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	*gnl_substr(char const *s, unsigned int start, size_t len)
 		len = 0;
 	if (len > (slen - start))
 		len = (slen - start);
-	substr = calloc(len + 1, sizeof(char)); //malloc((sizeof(char)) * (len + 1));
+	substr = ft_malloc((sizeof(char)) * (len + 1));
 	if (!substr)
 		return (NULL);
 	i = 0;
@@ -64,7 +64,6 @@ char	*gnl_strchr(const char *s, int c)
 		{
 			return ((char *)s + i);
 		}
-			//return (&((char *)s)[i]);
 		i++;
 	}
 	return (0);
@@ -78,7 +77,8 @@ char	*gnl_strjoin(char const *s1, char const *s2)
 
 	if (s1 == NULL || s2 == NULL)
 		return (NULL);
-	str = ((char *)malloc(sizeof(char) * (gnl_strlen(s1) + gnl_strlen(s2) + 1)));
+	str = ((char *)ft_malloc(sizeof(char) * \
+		(gnl_strlen(s1) + gnl_strlen(s2) + 1)));
 	if (str == NULL)
 		return (NULL);
 	a = 0;

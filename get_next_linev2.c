@@ -1,29 +1,40 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_linev2.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/26 13:12:57 by pbumidan          #+#    #+#             */
+/*   Updated: 2025/02/26 13:14:05 by pbumidan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "get_next_line.h"
 #include <stdio.h>
 
-char *ft_free(char **str)
+char	*ft_free(char **str)
 {
-    if (str && *str)
-    {
-        free(*str);
-        *str = NULL;
-    }
-    return (NULL);
+	if (str && *str)
+	{
+		free(*str);
+		*str = NULL;
+	}
+	return (NULL);
 }
 
-
-static char *ft_free_all(char **source, char **str)
+static char	*ft_free_all(char **source, char **str)
 {
-    if (str && *str)
-    {
-        free(*str);
-        *str = NULL;
-    }
-    if (source && *source)
-    {
-        *source = NULL;
+	if (str && *str)
+	{
+		free(*str);
+		*str = NULL;
 	}
-    return (NULL);
+	if (source && *source)
+	{
+		*source = NULL;
+	}
+	return (NULL);
 }
 
 static char	*ft_get_line(char **source)

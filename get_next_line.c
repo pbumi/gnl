@@ -6,25 +6,25 @@
 /*   By: pbumidan <pbumidan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 14:47:33 by pbumidan          #+#    #+#             */
-/*   Updated: 2025/01/10 16:04:07 by pbumidan         ###   ########.fr       */
+/*   Updated: 2025/02/26 13:21:53 by pbumidan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static char *on_error(char **gnl, char **tmp)
+static char	*on_error(char **gnl, char **tmp)
 {
-    if (*tmp)
+	if (*tmp)
 	{
-        free(*tmp);
-        *tmp = NULL;
-    }
-    if (*gnl)
+		free(*tmp);
+		*tmp = NULL;
+	}
+	if (*gnl)
 	{
-		free(*gnl); 
-        *gnl = NULL;
-    }
-    return (NULL);
+		free(*gnl);
+		*gnl = NULL;
+	}
+	return (NULL);
 }
 
 static char	*get_line(char **gnl)
